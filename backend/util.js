@@ -20,7 +20,7 @@ const IsAuth = (req, res, next) =>{
             if(err){
                 return res.status(401).send ({msg:"Invalid Token"})
             }
-            req.user = token;
+            req.user = decode;
             next();
             return;
         })
@@ -32,7 +32,9 @@ const IsAuth = (req, res, next) =>{
 const isAdmin = (req, res, next) =>{
     if(req.user && req.user.isAdmin){
         return next()
+    }else{
+        return res.status(401).send("Admin Token is not valid")
     }
-    return res.status(401).send("Token is not valid")
+    
 }
 export {isAdmin, getToken, IsAuth}

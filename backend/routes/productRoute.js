@@ -30,13 +30,13 @@ router.post("/", isAdmin, IsAuth, async(req, res)=>{
         name: req.body.name,
         image: req.body.image,
         price: req.body.price,
-        contInStock:req.body.countInStock,
+        countInStock:req.body.countInStock,
         weight: req.body.weight,
         dimension: req.body.dimension,
         material: req.body.material,
         brand:req.body.brand,
         reviews: req.body.reviews,
-        new: req.body.new,
+        New: req.body.New,
         image2:req.body.image2,
         hoverImage1:req.body.hoverImage1,
         hoverImage2:req.body.hoverImage2,
@@ -59,13 +59,13 @@ router.put("/:id", isAdmin, IsAuth, async(req, res)=>{
         product.name= req.body.name;
         product.image= req.body.image;
         product.price= req.body.price;
-        product.contInStock=req.body.countInStoct;
+        product.countInStock=req.body.countInStock;
         product.weight= req.body.weight;
         product.dimension= req.body.dimension;
         product.material= req.body.material;
         product.brand=req.body.brand;
         product.reviews= req.body.reviews;
-        product.new= req.body.new;
+        product.New= req.body.New;
         product.image2=req.body.image2;
         product.hoverImage1=req.body.hoverImage1;
         product.hoverImage2=req.body.hoverImage2;
@@ -80,6 +80,16 @@ router.put("/:id", isAdmin, IsAuth, async(req, res)=>{
     }
     return res.status(500).send({message: "Error in updating product"})
 
+})
+
+router.delete("/:id",  isAdmin, IsAuth, async(req, res)=>{
+    const deletedProduct = await Product.findById(req.params.id)
+    if(deletedProduct){
+        await deletedProduct.remove();
+        res.send({message: "Product Deleted"})
+    }else{
+        res.send({message: "Error in Deleting Product"})
+    }
 })
 
 
